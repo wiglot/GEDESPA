@@ -1,0 +1,1928 @@
+#LyX 1.6.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass beamer
+\begin_preamble
+\usetheme{Copenhagen}
+% or ...
+
+\setbeamercovered{transparent}
+% or whatever (possibly just delete it)
+
+
+\usecolortheme[cmyk={1.0,0.15,0.86,0.00}]{structure}
+\end_preamble
+\use_default_options false
+\language english
+\inputencoding auto
+\font_roman times
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 2
+\use_esint 0
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 2
+\tocdepth 2
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Padrão Singleton
+\begin_inset OptArg
+status open
+
+\begin_layout Plain Layout
+Singleton pattern
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subtitle
+Costruindo uma classe de Logs
+\end_layout
+
+\begin_layout Author
+Wagner Reck
+\begin_inset Flex InstituteMark
+status open
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Institute
+\begin_inset Flex InstituteMark
+status collapsed
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+
+Ciência da Computação - UNIPAMPA
+\end_layout
+
+\begin_layout Date
+GEDESPA
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+AtBeginSubsection[]{
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+frame<beamer>{ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\backslash
+frametitle{Outline}   
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\backslash
+tableofcontents[currentsection,currentsubsection] 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  }
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+If you wish to uncover everything in a step-wise fashion, uncomment the
+ following command:
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%
+\backslash
+beamerdefaultoverlayspecification{<+->}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginFrame
+Sumário
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Structuring a talk is a difficult task and the following structure may not
+ be suitable.
+ Here are some rules that apply for this solution: 
+\end_layout
+
+\begin_layout Plain Layout
+- Exactly two or three sections (other than the summary).
+ 
+\end_layout
+
+\begin_layout Plain Layout
+- At *most* three subsections per section.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+- Talk about 30s to 2min per frame.
+ So there should be between about 15 and 30 frames, all told.
+\end_layout
+
+\begin_layout Plain Layout
+- A conference audience is likely to know very little of what you are going
+ to talk about.
+ So *simplify*! 
+\end_layout
+
+\begin_layout Plain Layout
+- In a 20min talk, getting the main ideas across is hard enough.
+ Leave out details, even if it means being less precise than you think necessary.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+- If you omit details that are vital to the proof/implementation, just say
+ so once.
+ Everybody will be happy with that.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Sobre esse Talk
+\end_layout
+
+\begin_layout BeginFrame
+será visto:
+\end_layout
+
+\begin_layout Itemize
+O que são padrões de projeto
+\end_layout
+
+\begin_layout Itemize
+Introdução ao padrão singleton
+\end_layout
+
+\begin_layout Itemize
+Por que utilizar Log em aplicações
+\end_layout
+
+\begin_layout Itemize
+Como usar singleton para criar um log
+\end_layout
+
+\begin_layout Itemize
+Nível do talk: básico/intermediário
+\end_layout
+
+\begin_layout Itemize
+Disponível em www.github.com/wiglot/GEDESPA
+\end_layout
+
+\begin_layout Section
+Singleton
+\end_layout
+
+\begin_layout Subsection
+Padrões
+\begin_inset OptArg
+status open
+
+\begin_layout Plain Layout
+Breve introdução
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginFrame
+O que é um padrão de projeto.
+\end_layout
+
+\begin_layout FrameSubtitle
+Design pattern
+\end_layout
+
+\begin_layout Definitions
+Padrões de projeto visam facilitar a reutilização de soluções de desenho,
+ não considerando o código.
+\end_layout
+
+\begin_layout Itemize
+Usados em projetos OO;
+\end_layout
+
+\begin_layout Pause
+
+\end_layout
+
+\begin_layout Itemize
+É difícil tratar um um problema;
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Por que tratar várias vezes?
+\end_layout
+
+\begin_layout Pause
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Encontando padrões aumenta reuso;
+\end_layout
+
+\begin_layout Subsection
+Singleton
+\end_layout
+
+\begin_layout BeginFrame
+O que é o padrão Singleton.
+ 
+\end_layout
+
+\begin_layout Block
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Singleton Pattern
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Block
+Garante que exista apenas uma instância de uma classe.
+\end_layout
+
+\begin_layout Itemize
+Acesso à objetos de qualquer parte do programa;
+\end_layout
+
+\begin_layout Itemize
+Muito util para classes como MainWindow, Application, Log;
+\end_layout
+
+\begin_layout Itemize
+Fim de variáveis globais (ugh!!);
+\end_layout
+
+\begin_layout Itemize
+Apenas um objeto por classe;
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename classeLog.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginFrame
+Exemplo básico de classe
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout ExampleBlock
+SingleObject * SingleObject::self = 0;
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout ExampleBlock
+class SingleObject{
+\end_layout
+
+\begin_layout ExampleBlock
+private:
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+SingleObject(){ }
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+~
+\emph on
+SingleObject
+\emph default
+(){ }
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+Static SingleObject * self;
+\end_layout
+
+\begin_layout ExampleBlock
+public:
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+static SingleObject * New(){
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+if (
+\emph on
+SingleObject
+\emph default
+::self == 0)
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+SingleObject::self = new SingleObject;
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+return SingleObject::self;
+\end_layout
+
+\begin_layout ExampleBlock
+};
+\end_layout
+
+\begin_layout BeginFrame
+Explicando...
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset Flex CharStyle:Alert
+status collapsed
+
+\begin_layout Plain Layout
+SingleObject * SingleObject::self = 0
+\end_layout
+
+\end_inset
+
+;
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout ExampleBlock
+class SingleObject{
+\end_layout
+
+\begin_layout ExampleBlock
+private:
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+SingleObject(){ }
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+~
+\emph on
+SingleObject
+\emph default
+(){ }
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Flex CharStyle:Alert
+status collapsed
+
+\begin_layout Plain Layout
+Static SingleObject * self;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout ExampleBlock
+public:
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+static SingleObject * New(){
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+if (
+\emph on
+SingleObject
+\emph default
+::self == 0)
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+SingleObject::self = new SingleObject;
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+return SingleObject::self;
+\end_layout
+
+\begin_layout ExampleBlock
+};
+\end_layout
+
+\begin_layout BeginFrame
+Onde é instanciado o Objeto
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout ExampleBlock
+SingleObject * SingleObject::self = 0;
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout ExampleBlock
+class SingleObject{
+\end_layout
+
+\begin_layout ExampleBlock
+private:
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+SingleObject(){ }
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+~
+\emph on
+SingleObject
+\emph default
+(){ }
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+Static SingleObject * self;
+\end_layout
+
+\begin_layout ExampleBlock
+public:
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset Flex CharStyle:Alert
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+static SingleObject * New(){
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+if (
+\emph on
+SingleObject
+\emph default
+::self == 0)
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+SingleObject::self = new SingleObject;
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+return SingleObject::self;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout ExampleBlock
+};
+\end_layout
+
+\begin_layout BeginFrame
+Usando a classe
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout ExampleBlock
+SingleObject * var = SingleObject::New();
+\end_layout
+
+\begin_layout ExampleBlock
+var->someAction();
+\end_layout
+
+\begin_layout Section
+Classe de Log
+\end_layout
+
+\begin_layout Subsection
+Por que Usar Log?
+\end_layout
+
+\begin_layout BeginFrame
+Posso usar o printf!
+\end_layout
+
+\begin_layout Itemize
+
+\lang brazilian
+Muito usado no desenvolvimento.
+\end_layout
+
+\begin_layout Pause
+
+\end_layout
+
+\begin_layout Itemize
+
+\lang brazilian
+\begin_inset Quotes eld
+\end_inset
+
+Resolve
+\begin_inset Quotes erd
+\end_inset
+
+ o problema.
+\end_layout
+
+\begin_layout Pause
+
+\end_layout
+
+\begin_layout Itemize
+
+\lang brazilian
+Não preciso perder tempo escrevendo novas classes.
+\end_layout
+
+\begin_layout BeginFrame
+printf não deve ser usado!
+\end_layout
+
+\begin_layout FrameSubtitle
+...a não ser que tenha que comunicar algo...
+\end_layout
+
+\begin_layout Itemize
+
+\lang brazilian
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+<1->
+\end_layout
+
+\end_inset
+
+Como gerenciar diferentes classes de mensagens?
+\end_layout
+
+\begin_layout Itemize
+
+\lang brazilian
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<2->
+\end_layout
+
+\end_inset
+
+Como garantir que mensagens não cheguem ao cliente?
+\end_layout
+
+\begin_layout Itemize
+
+\lang brazilian
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<3->
+\end_layout
+
+\end_inset
+
+Se acontecer um erro no cliente, consigo quais dados?
+\end_layout
+
+\begin_layout Subsection
+Mensagem de Log
+\end_layout
+
+\begin_layout BeginFrame
+Armazenando mensagens
+\end_layout
+
+\begin_layout Itemize
+Armazenar Mensagem e nível;
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Mensagem é um texto
+\end_layout
+
+\begin_layout Itemize
+Nível pertence a um conjunto (log, warning, error, fatal...)
+\end_layout
+
+\end_deeper
+\begin_layout ExampleBlock
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+classe Message
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout ExampleBlock
+class Mwssage{
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+enum Nivel{log, warning, error};
+\end_layout
+
+\begin_layout ExampleBlock
+private:
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+string msg;
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+Nivel nivel;
+\end_layout
+
+\begin_layout ExampleBlock
+};
+\end_layout
+
+\begin_layout Subsection
+Armazenando os Logs
+\end_layout
+
+\begin_layout BeginFrame
+Classe Log
+\end_layout
+
+\begin_layout Itemize
+Usa uma classe singleton...
+\end_layout
+
+\begin_layout Itemize
+e uma lista de mensagens (classe message)
+\end_layout
+
+\begin_layout BeginFrame
+Classe Log (cont.)
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{classe Log}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout ExampleBlock
+class Log {
+\end_layout
+
+\begin_layout ExampleBlock
+private:
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+static Log * self;
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+List <Message> list;
+\end_layout
+
+\begin_layout ExampleBlock
+public:
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+static Log * New(){
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+if (Log::self == null){
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+Log::self = new Log();
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+}
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+return Log::self;
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+}
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+static void newLog(Message m){
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+Log::New()->list.append(m);
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+}
+\end_layout
+
+\begin_layout ExampleBlock
+};
+\end_layout
+
+\begin_layout BeginFrame
+Reparem na função...
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{classe Log}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout ExampleBlock
+class Log {
+\end_layout
+
+\begin_layout ExampleBlock
+private:
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+static Log * self;
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+List <Message> list;
+\end_layout
+
+\begin_layout ExampleBlock
+public:
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+static Log * New(){
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+if (Log::self == null){
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+Log::self = new Log();
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+}
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+return Log::self;
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+}
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset Flex CharStyle:Alert
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+static void newLog(Message m){
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+Log::New()->list.append(m);
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout ExampleBlock
+};
+\end_layout
+
+\begin_layout Subsection
+Usando a classe Log
+\end_layout
+
+\begin_layout BeginFrame
+Exemplo simples
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout ExampleBlock
+funcBla(){
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+//..
+ do something...
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+Log::newLog(msg(
+\begin_inset Quotes eld
+\end_inset
+
+Passou aqui..
+\begin_inset Quotes erd
+\end_inset
+
+, Log::log));
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+//...continue...
+\end_layout
+
+\begin_layout ExampleBlock
+}
+\end_layout
+
+\begin_layout Section*
+Conclusão
+\end_layout
+
+\begin_layout BeginFrame
+Para finalizar
+\end_layout
+
+\begin_layout Itemize
+Breve introdução ao padrão singleton.
+\end_layout
+
+\begin_layout Itemize
+
+\color none
+Exemplos de uso em C++
+\end_layout
+
+\begin_layout Itemize
+Melhorias do que foi apresentado.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Salvar em arquivo.
+\end_layout
+
+\begin_layout Itemize
+interface gráfica.
+\end_layout
+
+\begin_layout Itemize
+www.github.com/wiglot/LogView
+\end_layout
+
+\end_deeper
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-1"
+
+\end_inset
+
+ Desing Patterns: Elements of Reusable Object-Oriented Software 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+newblock
+\end_layout
+
+\end_inset
+
+ Eric Gamma 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+newblock
+\end_layout
+
+\end_inset
+
+ Addison-Wesley Professional.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-2"
+
+\end_inset
+
+Utilizando UML e Padrões de Projeto
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+newblock
+\end_layout
+
+\end_inset
+
+ Craig Larman 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+newblock
+\end_layout
+
+\end_inset
+
+ Bookman
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-4"
+
+\end_inset
+
+ Wikipedia - Padrões de projeto de software 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+newblock
+\end_layout
+
+\end_inset
+
+ http://pt.wikipedia.org/wiki/Padrões_de_projeto_de_software
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-3"
+
+\end_inset
+
+Gambi Design Patterns
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+newblock
+\end_layout
+
+\end_inset
+
+ http://desciclo.pedia.ws/wiki/Gambi_Design_Patterns <não ler!>
+\end_layout
+
+\begin_layout BeginFrame
+Perguntas
+\end_layout
+
+\begin_layout Block
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Block
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+center{
+\end_layout
+
+\end_inset
+
+
+\emph on
+Perguntas??
+\emph default
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Block
+Wagner Reck
+\end_layout
+
+\begin_layout Block
+wagner.reck@gmail.com
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\end_body
+\end_document
